@@ -32,7 +32,7 @@ $GetOut = $key_GetOut[mt_rand(0,count($key_GetOut) - 1)];
 $ComeHere_q = array("你過來", "機器人你過來", "機器人 你過來", "機器人 你給我過來", "機器人你給我過來");
 $key_ComeHere = array("你不是我老婆 我幹嘛過去(斜眼", "我的鈞淳呢？", $senderName."，輪不到你來命令我");
 $ComeHere = $key_ComeHere[mt_rand(0,count($key_ComeHere) - 1)];
-$key_ComeHere_m = array("鈞淳最Q了", "最愛鈞淳了", "老婆 什麼事m( _ _ )m  (膝蓋軟)");
+$key_ComeHere_m = array("鈞淳最Q了", "最愛鈞淳了", "老婆 什麼事m( _ _ )m  (膝蓋軟)", "Q淳4ni!", "鈞淳好Q");
 $ComeHere_m = $key_ComeHere_m[mt_rand(0,count($key_ComeHere_m) - 1)];
 
 $Crackme_q = array("我要潑你水", "臭機器人");
@@ -52,41 +52,39 @@ switch ($text) {
   case '/gid':
   	sendMessage($chatId, $chatId);
 	break;
-
-  case '晚安':
-  	sendMessage($chatId, $senderName."晚安");
-	break;
-	
-  case 'yeee':
-  	sendMessage($chatId, "是\"翊\" 不是yeeeeee!!!!");
-	break;
 	
   default:
   if (in_array($text, $Crackme_q))
   	sendMessage($chatId, $Crackme);
-	if (ereg("早", $text))
-		sendMessage($chatId, $MorningGreeting);
-  if (ereg("給本宮退下", $text))
+  if (preg_match("/早安/", $text))
+    sendMessage($chatId, $MorningGreeting);
+  if (preg_match("/yee/i", $text))
+    sendMessage($chatId, "是\"翊\" 不是".$text."!!!!");
+  if (preg_match("/晚安/", $text))
+    sendMessage($chatId, $senderName."晚安");
+  if (preg_match("/鈞淳/", $text))
+  	sendMessage($chatId, $ComeHere_m);
+  if (preg_match("/給本宮退下/", $text))
   {
     if ($senderName == "YachiWang")
        sendMessage($chatId, "喳");
     else
        sendMessage($chatId, $GetOut);
   }
-	if (in_array($text, $ComeHere_q))
-	{
-		if ($senderName == "Q鈞淳")
-			sendMessage($chatId, $ComeHere_m);
-		else
-			sendMessage($chatId, $ComeHere);
-	}
-	if (in_array($text, $Judge_q))
-	{
-		if ($senderName == "ChangKaiYi")
-			sendMessage($chatId, "就是說嘛! 太過分了!");
-		else
-  			sendMessage($chatId, $Judge);
-	}
+  if (in_array($text, $ComeHere_q))
+  {
+	if ($senderName == "Q鈞淳")
+		sendMessage($chatId, $ComeHere_m);
+	else
+		sendMessage($chatId, $ComeHere);
+  }
+  if (in_array($text, $Judge_q))
+  {
+	if ($senderName == "ChangKaiYi")
+		sendMessage($chatId, "就是說嘛! 太過分了!");
+	else
+ 		sendMessage($chatId, $Judge);
+  }
 
 }
 //定時發文

@@ -57,27 +57,33 @@ switch ($text) {
   	sendMessage($chatId, $chatId);
 	break;
 
-  case '晚安':
-  	sendMessage($chatId, $senderName."晚安");
-	break;
-	
-  case 'yeee':
-  	sendMessage($chatId, "是\"翊\" 不是yeeeeee!!!!");
-	break;
-	
+  case '月亮':
+    sendMessage($chatId, "🌕🌖🌗🌘🌑🌒🌓🌔🌕🌕");
+  break;
+
+	case '生肖':
+    sendMessage($chatId, "🐭🐮🐯🐰🐲🐍🐴🐐🐒🐓🐕🐷");
+  break;
+
   default:
   if (in_array($text, $Crackme_q))
   	sendMessage($chatId, $Crackme);
-	if (in_array($text, $Hung_q))
-		sendMessage($chatId, $Hung);
-  if (ereg("早", $text))
-    sendMessage($chatId, $MorningGreeting);
-  if (ereg("裕翔", $text))
-    sendMessage($chatId, $Lin);
-  if (ereg("子軒", $text))
+  if (in_array($text, $Hung_q))
     sendMessage($chatId, $Hung);
-  if (ereg("楷翊", $text))
+  if (preg_match("/早安/", $text))
+    sendMessage($chatId, $MorningGreeting);
+  if (preg_match("/yee/i", $text))
+    sendMessage($chatId, "是\"翊\"不是".$text."!!!!");
+  if (preg_match("/晚安/", $text))
+    sendMessage($chatId, $senderName."晚安");
+  if (preg_match("/裕翔/", $text))
+    sendMessage($chatId, $Lin);
+  if (preg_match("/子軒/", $text))
+    sendMessage($chatId, $Hung);
+  if (preg_match("/楷翊/", $text))
     sendMessage($chatId, $Chang);
+  if (preg_match("/(去死|有病)/", $text, $dirtyWords))
+    sendMessage($chatId, "你才".$dirtyWords[1]."膩!");
   if (in_array($text, $Judge_q))
   {
     if ($senderName == "ChangKaiYi")
@@ -88,31 +94,26 @@ switch ($text) {
 
 
 }
+//GetText fun
 function sendmessage($chatId, $text){
   $url = $GLOBALS[website]."/sendMessage?chat_id=".$chatId."&text=".urlencode($text);
   file_get_contents($url);
 }
-//GetText fun
+
 
 ?>
-<!--Upload UI
+<!--Upload UI-->
 <div title="Form">
 <form action="<?php  echo $website.'/sendPhoto' ?>" method="post" enctype="multipart/form-data">
   我要寄圖片到:
   <select name="chat_id" size="1">
-    <option value="">群組中
-    <option value="115538277">KaiYi
-    <option value="140241617">uselessOption</option>
+    <option value="-89703818">群組中
+    <option value="115538277">KaiYi</option>
   </select>
     
   <input name="photo" type="file" accept="image/*"/>
   <input type="submit" value="送出！" />
 </form>
-</div>-->
-<!--
-git add --all
-git commit -m "string"
-git push
--->
+</div>
 </body>
 </html>
