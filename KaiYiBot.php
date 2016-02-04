@@ -19,6 +19,7 @@ $senderName = $updateArray["message"]["from"]["first_name"].$updateArray["messag
 $text = $updateArray["message"]["text"];
 
 //Message Arrays
+$photoYee = "AgADBQADtqcxGyaRuwTA0BFv0PVLheRWvjIABEthvDFEdmrW2FwBAAEC";
 $key_MorningGreeting = array("早安啊", "各位早安啊!", "又是一個美好的早晨~~", $senderName."早~~", "不要調戲我!!!!");
 $MorningGreeting = $key_MorningGreeting[mt_rand(0,count($key_MorningGreeting) - 1)];
 
@@ -42,48 +43,50 @@ $Crackme = $key_Crackme[mt_rand(0,count($key_Crackme) - 1)];
 //Reply Messages
 switch ($text) { 
   case '/test':
-    sendMessage($chatId, "I'm KaiYi Bot!! \n Ur ID is:".$senderId);
+    sendMessage($chatId, "I'm KaiYi Bot!! \nUr ID is:".$senderId);
   break;
 
   case '/id':
-  	sendMessage($chatId, $senderId);
-	break;
-	
+    sendMessage($chatId, $senderId);
+  break;
+  
   case '/gid':
-  	sendMessage($chatId, $chatId);
-	break;
-	
+    sendMessage($chatId, $chatId);
+  break;
+  
   default:
   if (in_array($text, $Crackme_q))
-  	sendMessage($chatId, $Crackme);
+    sendMessage($chatId, $Crackme);
   if (preg_match("/早安/", $text))
     sendMessage($chatId, $MorningGreeting);
-  if (preg_match("/yee/i", $text))
-    sendMessage($chatId, "是\"翊\" 不是".$text."!!!!");
+  if (preg_match("/(yee+)/i", $text, $yee)){
+    sendMessage($chatId, "是*\"翊\"*不是".$yee[1]."!!!!");
+    sendPhoto($chatId, $photoYee);
+  }
   if (preg_match("/晚安/", $text))
     sendMessage($chatId, $senderName."晚安");
   if (preg_match("/鈞淳/", $text))
-  	sendMessage($chatId, $ComeHere_m);
+    sendMessage($chatId, $ComeHere_m);
   if (preg_match("/給本宮退下/", $text))
   {
     if ($senderName == "YachiWang")
-       sendMessage($chatId, "喳");
+      sendMessage($chatId, "喳");
     else
-       sendMessage($chatId, $GetOut);
+      sendMessage($chatId, $GetOut);
   }
   if (in_array($text, $ComeHere_q))
   {
-	if ($senderName == "Q鈞淳")
-		sendMessage($chatId, $ComeHere_m);
-	else
-		sendMessage($chatId, $ComeHere);
+  if ($senderName == "Q鈞淳")
+    sendMessage($chatId, $ComeHere_m);
+  else
+    sendMessage($chatId, $ComeHere);
   }
   if (in_array($text, $Judge_q))
   {
-	if ($senderName == "ChangKaiYi")
-		sendMessage($chatId, "就是說嘛! 太過分了!");
-	else
- 		sendMessage($chatId, $Judge);
+  if ($senderName == "ChangKaiYi")
+    sendMessage($chatId, "就是說嘛! 太過分了!");
+  else
+    sendMessage($chatId, $Judge);
   }
 
 }
@@ -94,13 +97,17 @@ date_default_timezone_set("Asia/Taipei");
 set_time_limit(0);
 $NetCut = "" ;
 if (date("H:i") == "22:53")
-	sendMessage("115538277", "定時發文測試");
+  sendMessage("115538277", "定時發文測試");
 */
 //GetText fun
-function sendmessage($chatId, $text){
+function sendMessage($chatId, $text){
 
-  $url = $GLOBALS[website]."/sendMessage?chat_id=".$chatId."&text=".urlencode($text);
-  file_get_contents($url);
+  $msgUrl = $GLOBALS[website]."/sendMessage?chat_id=".$chatId."&text=".urlencode($text)."&parse_mode=Markdown";
+  file_get_contents($msgUrl);
+}
+function sendPhoto($chatId, $photo){
+  $photoUrl = $GLOBALS[website]."/sendPhoto?chat_id=".$chatId."&photo=".$photo;
+  file_get_contents($photoUrl);
 }
 ?>
 <!--Upload UI-->

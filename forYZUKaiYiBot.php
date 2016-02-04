@@ -22,6 +22,7 @@ $senderName = $updateArray["message"]["from"]["first_name"].$updateArray["messag
 $text = $updateArray["message"]["text"];
 
 //Message Arrays
+$photoYee = "AgADBQADqqcxG2WxgQcZJUVV_h3pKo4lvjIABMzc-FHohtT1UhYBAAEC";
 $key_MorningGreeting = array("早安啊", "各位早安啊!", "又是一個美好的早晨~~", $senderName."早~~", "不要調戲我!!!!");
 $MorningGreeting = $key_MorningGreeting[mt_rand(0,count($key_MorningGreeting) - 1)];
 
@@ -43,6 +44,12 @@ $Hung = $key_Hung[mt_rand(0,count($key_Hung) - 1)];
 $key_Chang = array("楷yeeeeeeee", "yeeeee", "恐龍4ni", "恐龍yeeeeee");
 $Chang = $key_Chang[mt_rand(0,count($key_Chang) - 1)];
 
+$key_moon = array("🌕🌖🌗🌘🌑🌒🌓🌔🌕", "🌑🌒🌓🌔🌕🌖🌗🌘🌑", "🌕🌖🌗🌘🌑", "🌑🌒🌓🌔🌕");
+$moon = $key_moon[mt_rand(0,count($key_moon) - 1)];
+
+$key_weather = array("☀️🌤⛅️🌥☁️🌦🌧⛈🌩⚡️", "☀️🌤⛅️🌥☁️", "☁️🌦🌧⛈🌩⚡️");
+$weather = $key_weather[mt_rand(0,count($key_weather) - 1)];
+
 //Reply Messages
 switch ($text) { 
   case '/test':
@@ -50,30 +57,35 @@ switch ($text) {
   break;
 
   case '/id':
-  	sendMessage($chatId, $senderId);
-	break;
-	
+    sendMessage($chatId, $senderId);
+  break;
+  
   case '/gid':
-  	sendMessage($chatId, $chatId);
-	break;
-
-  case '月亮':
-    sendMessage($chatId, "🌕🌖🌗🌘🌑🌒🌓🌔🌕🌕");
+    sendMessage($chatId, $chatId);
   break;
 
-	case '生肖':
+  case '月亮':
+    sendMessage($chatId, $moon);
+  break;
+
+  case '生肖':
     sendMessage($chatId, "🐭🐮🐯🐰🐲🐍🐴🐐🐒🐓🐕🐷");
   break;
 
+  case '天氣':
+    sendMessage($chatId, $weather);
+
   default:
   if (in_array($text, $Crackme_q))
-  	sendMessage($chatId, $Crackme);
+    sendMessage($chatId, $Crackme);
   if (in_array($text, $Hung_q))
     sendMessage($chatId, $Hung);
   if (preg_match("/早安/", $text))
     sendMessage($chatId, $MorningGreeting);
-  if (preg_match("/yee/i", $text))
-    sendMessage($chatId, "是\"翊\"不是".$text."!!!!");
+  if (preg_match("/(yee+)/i", $text, $yee)){
+    sendMessage($chatId, "是*\"翊\"*不是".$yee[1]."!!!!");
+    sendPhoto($chatId, $photoYee);
+  }
   if (preg_match("/晚安/", $text))
     sendMessage($chatId, $senderName."晚安");
   if (preg_match("/裕翔/", $text))
@@ -82,7 +94,7 @@ switch ($text) {
     sendMessage($chatId, $Hung);
   if (preg_match("/楷翊/", $text))
     sendMessage($chatId, $Chang);
-  if (preg_match("/(去死|有病)/", $text, $dirtyWords))
+  if (preg_match("/(去死|有病|智障|白痴)/", $text, $dirtyWords))
     sendMessage($chatId, "你才".$dirtyWords[1]."膩!");
   if (in_array($text, $Judge_q))
   {
@@ -96,11 +108,13 @@ switch ($text) {
 }
 //GetText fun
 function sendmessage($chatId, $text){
-  $url = $GLOBALS[website]."/sendMessage?chat_id=".$chatId."&text=".urlencode($text);
+  $url = $GLOBALS[website]."/sendMessage?chat_id=".$chatId."&text=".urlencode($text)."&parse_mode=Markdown";
   file_get_contents($url);
 }
-
-
+function sendPhoto($chatId, $photo){
+  $photoUrl = $GLOBALS[website]."/sendPhoto?chat_id=".$chatId."&photo=".$photo;
+  file_get_contents($photoUrl);
+}
 ?>
 <!--Upload UI-->
 <div title="Form">
