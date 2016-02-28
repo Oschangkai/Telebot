@@ -42,6 +42,8 @@ else {//is normal words
     sendMessage($chatId, $moon);
   if (preg_match("/天氣/", $text))
     sendMessage($chatId, $weather);
+  if (preg_match("/生肖/", $text))
+    sendMessage($chatId, $zodiac);
   //Bad
   if (in_array($text, $Crackme_q))
     sendMessage($chatId, $Crackme);
