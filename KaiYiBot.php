@@ -2,11 +2,12 @@
 //Set
 $botToken = "botToken";
 include_once("Telebot_configWithFuncs.php");
-include_once("Telebot_msgArraysWithSender.php");
-initPage(groupName, groupNum, $website);
+initPage("groupID", $website);
+logMsg($chatId, $msgLog);
 
 //Message Arrays
 $photoYee = "AgADBQADtqcxGyaRuwTA0BFv0PVLheRWvjIABEthvDFEdmrW2FwBAAEC";
+include_once("Telebot_msgArraysWithSender.php");
 
 $key_GetOut = array("才不要膩", "你誰啊 我幹嘛聽你的話?", "你不是雅琪 我才不要聽".$senderName."的話膩", "你說什麼?");
 $GetOut = $key_GetOut[mt_rand(0,count($key_GetOut) - 1)];

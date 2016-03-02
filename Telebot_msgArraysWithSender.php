@@ -19,6 +19,11 @@ $Crackme = $key_Crackme[mt_rand(0,count($key_Crackme) - 1)];
 $key_MorningGreeting = array("早安啊", "各位早安啊!", "又是一個美好的早晨~~", $senderName."早~~", "不要調戲我!!!!");
 $MorningGreeting = $key_MorningGreeting[mt_rand(0,count($key_MorningGreeting) - 1)];
 
+$Bool = rand(0, 1);
+//Names
+$key_Chang = array("楷yeeeeeeee", "yeeeee", "恐龍4ni", "恐龍yeeeeee");
+$Chang = $key_Chang[mt_rand(0,count($key_Chang) - 1)];
+
 //Sender
 if (substr($text, 0, 1) == "/"){//is cmd
   $text = strtolower($text);
@@ -59,10 +64,15 @@ else {//is normal words
     sendMessage($chatId, $MorningGreeting);
   if (preg_match("/晚安/", $text))
     sendMessage($chatId, $senderName."晚安");
+  if (preg_match("/楷翊/", $text))
+    sendMessage($chatId, $Chang);
   if (preg_match("/(yee+)/i", $text, $yee))
   {
-    sendMessage($chatId, "是*\"翊\"*不是".$yee[1]."!!!!");
-    sendPhoto($chatId, $photoYee);
+    $key_yees = array("楷".$yee[1], "@kaiyeee: 4ni!!!", $Chang, $Chang, "是*\"翊\"*不是".$yee[1]."!!!!");
+    $yees = $key_yees[mt_rand(0,count($key_yees) - 1)];
+    sendMessage($chatId, $yees);
+    if ($Bool == 1)
+      sendPhoto($chatId, $photoYee);
   }
 }
 ?>
