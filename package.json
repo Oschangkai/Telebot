@@ -1,0 +1,17 @@
+{
+  "name": "kaiyi-tgbot",
+  "version": "0.1.0",
+  "description": "Telegram Bot written in nodejs",
+  "main": "server.js",
+  "repository": "https://github.com/Oschangkai/Telebot-nodejs",
+  "author": "Oschangkai",
+  "license": "MIT",
+  "scripts": {
+    "start": "babel-node server.js"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "node-telegram-bot-api": "^0.30.0"
+  }
+}
